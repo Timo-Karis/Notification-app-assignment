@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+   integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+   crossorigin="anonymous" referrerpolicy="no-referrer" />
+   <title>Notification</title>
+   <style>
+
+       *{
+           margin: 0;
+           padding: 0;
+           box-sizing: border-box;
+       }
+
+       body{
+           height: 100vh;
+           width: 100vw;
+           display: flex;
+           justify-content: center;
+           align-items: center;
+           background-color: #FFD4CB;
+       }
+
+       .notifyContainer{
+           width: 330px;
+           height: 300px;
+           border-radius: 35px;
+           overflow: hidden;
+           position: relative;
+       }
+
+       .users{
+           height: 80px;
+           width: 100%;
+           display: flex;
+           align-items: center;
+       }
+
+       .users i{
+           font-size: 30px;
+           color: gray;
+           margin-left: 20px;
+           margin-right: 50px;
+       }
+
+
+       .notificationContent{
+           height: 100%;
+           width: 100%;
+           position: absolute;
+           top: 0;
+           background-color: whitesmoke;
+           padding-top: 120px;
+           border-radius: 40px;
+           transition: visibility 0.5s;
+           z-index: -2;
+           visibility: collapse;
+           animation: bounce 2.5s;
+           animation-delay: 8s;
+       }
+
+       h2{
+           color: gray;
+       }
+
+
+       .shell{
+           height: 80px;
+           width: 80px;
+           border-radius: 40px; 
+           position: absolute;
+           background-image: linear-gradient(150deg, rgb(253, 4, 149), #FF4500);
+           transition: all 1s;
+           top: 50px;
+           left: 250px;
+       } 
+
+       .notify{
+           height: 100%;
+           width: 80px;
+           border-radius: 40px;
+           display: flex;
+           justify-content: center;
+           background-image: linear-gradient(150deg, rgb(253, 4, 149), #FF4500);
+           align-items: center;
+       }
+
+       .translated1{
+
+           left: 0;
+       }
+
+       .translated2{
+
+           top: 0;
+       }
+
+       .notify i{
+
+           color: white;
+           text-size-adjust: 100px;
+           text-align: center;
+           font-size: 35px;
+           height: 40px;
+           width: 40px;
+           animation: swig_bell 2s;
+           animation-delay: 2.2s;
+       }
+
+       .notificationTitle{
+
+           height: 40px;
+           width: 200px;
+           position: absolute;
+           font-weight: 600;
+           font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+           left: 70px;
+           text-align: center;
+           top: 20px;
+           color: white;
+           font-size: 26px;
+       }
+
+       @keyframes swig_bell{
+
+           0%{ transform: rotateZ(40deg);}
+           50%{ transform: rotateZ(-40deg);}
+           75%{ transform: rotateZ(10deg);}
+           80%{ transform: rotateZ(-10deg);}
+           85%{ transform: rotateZ(5deg);}
+           90%{ transform: rotateZ(-5deg);}
+           100%{ transform: rotateZ(0deg);}
+       }
+
+       @keyframes bounce{
+
+           0%{ top: -90px;}
+           40%{ top: 0px;}
+           60%{ top: -60px;}
+           75%{ top: 0;}
+           85%{ top: -30px;}
+           90%{ top: 0;}
+           95%{ top: -10px;}
+           100%{ top: 0px;}
+           
+       }
+
+   </style>
+</head>
+<body>
+   
+   <div class="notifyContainer">
+       <div class="shell">
+           <div class="notify" id="note">
+               <i class="fa fa-bell" aria-hidden="true"></i>
+           </div>
+       </div>
+
+
+       <div class="notificationContent">
+           <div class="users">
+               <i class="fa-solid fa-user-plus"></i>
+               <div >
+                   <h2>James Mutemi</h2>
+                   <h2>Followed You</h2>
+               </div>
+           </div>
+           <div class="users">
+               <i class="fa-solid fa-user-plus"></i>
+               <div >
+                   <h2>SCT221-0092/2020</h2>
+                   <h2>Followed You</h2>
+               </div>
+           </div>
+       </div>
+   </div>
+
+
+   <script type="text/javascript">
+
+        const notification = document.querySelector('.shell')
+        const notifyIcon = document.getElementById('note')
+        const notificationContent = document.querySelector('.notificationContent')
+
+
+        notifyIcon.onclick = () => audio.play()
+
+
+
+        setTimeout( () => {
+        notification.classList.add('translated1')
+        
+        }, 2000)
+
+        let notificatonNum = 2
+
+        setTimeout( () => {
+
+        notification.style.width = '100%'
+        notifyIcon.style.backgroundImage = 'none'
+
+        const title = document.createElement('span')
+        title.classList.add('notificationTitle')
+        notification.appendChild(title)
+        titleAnim(title)
+
+        }, 4200)
+
+
+        function titleAnim(titleEl){
+
+        setTimeout( ()=> {
+
+            let title = `${notificatonNum} Notifications`
+
+            let wordIndex = 0
+            let timer = setInterval(() => {
+                if(wordIndex < title.length){
+                    titleEl.textContent += title.charAt(wordIndex)
+                    wordIndex++
+                }else{
+                    clearInterval(timer)
+
+                    setTimeout( () => {
+
+                    notification.classList.add('translated2')
+                    
+                    }, 1000)
+                    setTimeout( () => {
+                    notificationContent.style.visibility = "visible"
+                    }, 2000)
+                }
+            }, 100)
+
+        },500)
+        }
+   </script>
+</body>
+</html>
